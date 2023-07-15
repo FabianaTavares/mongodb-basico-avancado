@@ -1,11 +1,30 @@
 {
-  "name": "mongodb-do-basico-ao-avancado",
-  "version": "1.0.0",
-  "description": "Estudo de MongoDB do básico ao Avançado",
-  "main": "N",
-  "scripts": {
-    "test": "N"
-  },
-  "author": "Fabiana <fabi.tavares1@gmail.com> (http://www.frtavares.com.br/)",
-  "license": "MIT"
+	"name": "mongodb-do-basico-ao-avancado",
+	"version": "1.0.0",
+	"description": "Estudo de MongoDB do básico ao Avançado",
+	"scripts": {
+		"release": "standard-version"
+	},
+	"author": "Fabiana <fabi.tavares1@gmail.com> (http://www.frtavares.com.br/)",
+	"license": "MIT",
+	"repository": {
+		"url": "https://github.com/FabianaTavares/mongodb-basico-avancado.git"
+	},
+	"devDependencies": {
+		"@commitlint/cli": "^17.6.6",
+		"@commitlint/config-conventional": "^17.6.6",
+		"cz-conventional-changelog": "^3.3.0",
+		"husky": "^8.0.3",
+		"standard-version": "^9.5.0"
+	},
+	"husky": {
+		"hooks": {
+			"commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+		}
+	},
+	"config": {
+		"commitizen": {
+			"path": "./node_modules/cz-conventional-changelog"
+		}
+	}
 }
