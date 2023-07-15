@@ -1,0 +1,3 @@
+{"_id":{"$oid":"64b296eecfbf2ba8263dec0f"},"prova_numero":1.0,"nota":10.0}
+{"_id":{"$oid":"64b296f8cfbf2ba8263dec10"},"prova_numero":2.0,"nota":7.0}
+{"_id":{"$oid":"64b29705cfbf2ba8263dec11"},"prova_numero":3.0,"nota":8.0}

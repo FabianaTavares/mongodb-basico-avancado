@@ -1,0 +1,11 @@
+{
+  "name": "mongodb-do-basico-ao-avancado",
+  "version": "1.0.0",
+  "description": "Estudo de MongoDB do básico ao Avançado",
+  "main": "N",
+  "scripts": {
+    "test": "N"
+  },
+  "author": "Fabiana <fabi.tavares1@gmail.com> (http://www.frtavares.com.br/)",
+  "license": "MIT"
+}
