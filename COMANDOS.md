@@ -106,6 +106,7 @@ write Concern
 {w: "majority", wtimeout: 100 }
 ```
 
+
 ## Sessão 4 - Leitura de dados (Read)
 
 Encontrar dados entre valores (in)
@@ -129,55 +130,108 @@ db.books.find({ pageCount: { $lt: 120 }}).pretty()
 ```
 
 Utilizando o operador $or (um ou outro) - um valor ou outro
+```
 db.books.find({ $or: [{pageCount: {$gt:500}}, {_id:{$lt:5}}] }).pretty()
+```
 
 Utilizando os operadores and e or na mesma consultar
+```
 db.books.find({ status: "PUBLISH",  $or: [{pageCount: 500}, {authors: "Robi Sen"}] }).pretty()
+```
 
 Contando o numero de resultados (count)
+```
 db.books.find({ pageCount: {$gt: 600} }).count()
+```
 
 ### Tarefa 3 - Exercicio 3 - Leitura de Dados
 1 - Selecione livros da categoria Java
+```
 db.books.find({ categories: {$in: ["Java"]}}).pretty() ou db.books.find({ categories: "Java"}}).pretty()
+```
 
 2 - Selecione livros com menos de 100 paginas.
+```
 db.books.find({ pageCount: { $lt: 100 }}).pretty()
+```
 
 3 - Selecione os livros da categoria Microsoft com mais de 300 paginas.
+```
 db.books.find({ categories: "Microsoft", pageCount: {$gt: 300} }).pretty()
+```
 
 4 - Conte quantos livros estão na categoria Web Development
+```
 db.books.find({ categories: "Web Development" }).count()
+```
 
 5 - utilize o operador $or para resgatar livros de Bret Updegraff que são da categoria Mobile
+```
 db.books.find({$or:[{authors: "Bret Updegraff"},{categories: "Mobile"}] }).pretty()
-
+```
 
 
 ## Seção 5 - Atualização de Dados (Update)
 
 Para atualizar apenas um dado
+```
 db.books.updateOne({_id: 314}, {$set: {pageCount: 1000}})
+```
 
 ### Exercicio 9
+
 Altere o titulo do livro com id 20, para "Meu primeiro update" e encontre o registro para ver se foi corretamente modificado.
+```
 db.books.updateOne({_id: 20}, {$set: {title: "Meu primeiro update"}})
 db.books.findOne({_id: 20})
+```
 
 Para atualizar vários dados ao mesmo tempo
+```
 db.books.updateMany({categories: "Java"}, {$set: {status: "UNPUBLISHED"}})
 db.books.findOne({categories: "Java"})
+```
 
 Adicionando dados com update. é possível inserir um campo a mais para um autor especifico
+```
 db.books.updateMany({authors: "Vikram Goyal"}, {$set: {downloads: 1000}})
 db.books.findOne({authors: "Vikram Goyal"})
+```
 
 Adicionar item a um array
+```
 db.books.updateOne({_id: 201}, {$push: {categories: "PHP"}})
+```
 
 atualizando todos os dados de uma collection (update sem where)
-
 ```
 db.books.updateMany({}, {$set: {atualizado: true}})
 ```
+
+atualizando todos os dados de uma collection (update sem where)
+```
+db.books.updateMany({}, {$set: {atualizado: true}})
+```
+
+### Tarefa 4
+1 - Após qualquer atualização, faça uma seleção de dados para verificar se o registro está correto;
+
+2 - Atualize o status do livro flex 4 in Action para OUT OF STOCK
+```
+db.books.updateOne({title: "Flex 4 in Action"}, {$set: {status: "OUT OF STOCK"}})
+db.books.findOne({title: "Flex 4 in Action"}).pretty()
+```
+
+3 - Atualize todos os livros que tem menos de 100 paginas com a chave short_book e o valor true;
+```
+db.books.updateMany({pageCount: {$lt:100} }, {$set: {short_book: true}})
+db.books.findOne({pageCount: {$lt:100}})
+```
+
+4 - Adicione a categoria Many Pages aos livros da categoria Java com mais de 500 paginas.
+```
+db.books.updateMany({ categories: "Java", pageCount: {$gt: 500}}, {$push: {categories: "Many Pages"}})
+db.books.find({categories: "Many Pages"}).pretty()
+```
+
+Seção 6: Remoção de Dados (Delete/Detroy)
