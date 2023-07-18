@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/FabianaTavares/mongodb-basico-avancado/compare/v1.3.0...v1.4.0) (2023-07-18)
+
+
+### Funcionalidades
+
+* sessão 4 ([46cc8dd](https://github.com/FabianaTavares/mongodb-basico-avancado/commit/46cc8ddd451b0c4fe7645ecf0b34172cefd67f29))
+
 ## [1.3.0](https://github.com/FabianaTavares/mongodb-basico-avancado/compare/v1.2.0...v1.3.0) (2023-07-18)
 
 
