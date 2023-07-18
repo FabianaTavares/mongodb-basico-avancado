@@ -7,36 +7,86 @@ starta o mongo.
 ```
 mongo
 ```
+mostra a lista de bancos criadas.
 
-show dbs => mostra a lista de bancos criadas.
+```
+show dbs
+```
 
-use ==> comando de criar algum banco. ex: use primeirobanco
+comando de criar / ou usar algum banco. ex: use primeirobanco
 
-db. ==> comandos para utilizar neste banco.
+```
+use "nome do banco"
+```
+
+Para verificar o banco de dados selecionado atualmente usar o comando db
+```
+db
+```
+
+ verificar a sua lista de bancos de dados
+```
+show dbs
+```
+
+Comando para criar collection e inserir dados nela
+```
 db.primeiracollection.insertOne({  nome: Fabiana, idade: 35 })
-db.primeiracollection.findOne({})
+```
+
+Listar os dados da collection
+```
+db.primeiracollection.findOne().pretty()
+
 
 db => mostra o banco atual, também serve para mudar de banco.
 .find() => serve para trazer todos os dados, ou filtrar um dado exato.
 .pretty() => retorno de dados melhor formatado, deixando mais legivel.
+```
 
-.createCollection =>
+lista todas as coleções
+```
+show collections
+```
 
-show collections => lista todas as coleções
-db.collectionname.drop() => remover uma collection
-db.dropDatabase => deleta o banco de dados todo!!!
+remover uma collection
+```
+db.collectionname.drop()
+```
 
+deleta o banco de dados todo!!!
+```
+db.dropDatabase
+```
+
+importar arquivo
+```
 mongoimport <arquivo> -d <database> -c <collection>
+```
 
-mongoexport -c <collection> -d <database> -o <output> => exportar um arquivo
+exportar um arquivo
+```
+mongoexport -c <collection> -d <database> -o <output>
+```
 
-mongodump -d <banco> -o <diretorio> => exportar muitas collections
+exportar muitas collections
+```
+mongodump -d <banco> -o <diretorio>
+```
 
-mongorestore <diretorio> => importar dados do mongodump
+importar dados do mongodump
+```
+mongorestore <diretorio>
+```
 
-mongostat => Monitoramento do MongoDB
+Monitoramento do MongoDB
+```
+mongostat
+```
+
 
 remover vários bancos preservando os principais:
+```
 Mongo().getDBNames().forEach(function(db) {
 
 	if(['admin', 'config', 'local'].indexOf(db) < 0) {
@@ -44,27 +94,39 @@ Mongo().getDBNames().forEach(function(db) {
 	}
 
 });
+```
 
 inserir um ou vários dados:
+```
 db.<collection>.insertMany([<dados...>])
+```
 
 write Concern
+```
 {w: "majority", wtimeout: 100 }
-
+```
 
 ## Sessão 4 - Leitura de dados (Read)
 
 Encontrar dados entre valores (in)
+```
 db.books.find({ categories: {$in: ["Java", "Internet"]}})
+```
 
 Encontrar multiplas condições (and)
+```
 db.books.find({ pageCount: 592, _id: 63 })
+```
 
 Utilizando o operador $gt (greater than) - Maior que algum valores
+```
 db.books.find({ pageCount: { $gt: 450 }}).pretty()
+```
 
 Utilizando o operador $lt (less than) - menor que algum valores
+```
 db.books.find({ pageCount: { $lt: 120 }}).pretty()
+```
 
 Utilizando o operador $or (um ou outro) - um valor ou outro
 db.books.find({ $or: [{pageCount: {$gt:500}}, {_id:{$lt:5}}] }).pretty()
