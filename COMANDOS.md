@@ -234,4 +234,56 @@ db.books.updateMany({ categories: "Java", pageCount: {$gt: 500}}, {$push: {categ
 db.books.find({categories: "Many Pages"}).pretty()
 ```
 
-Seção 6: Remoção de Dados (Delete/Detroy)
+## Seção 6: Remoção de Dados (Delete/Detroy)
+
+remover um unico dado:
+```
+db.books.deleteOne({_id:20})
+```
+
+remover vários dados:
+```
+db.books.deleteMany({categories: "Java"})
+```
+
+removendo todos os dados de uma collection
+```
+db.books.deleteMany({})
+```
+
+## Seção 7 - Imersão nos tipos de Dados
+
+como verificar o tipo de dados
+```
+db.pessoas.find({nome: "Maria"})
+const maria = db.pessoas.find({nome: "Maria"})
+typeof maria.nome
+```
+
+tipo arrays
+```
+db.arrays.find()
+```
+
+tipo datas => formato ISO
+```
+db.dates.insertOne({data: newDate()})
+```
+
+tipo document guarda chaves e valores
+```
+db.documents.insertOne({ nome: "Maria", desc: {profissao: "Programador", hobbies: ["estudar, "Ler"]} })
+```
+
+tipo numberos, são classificados como double (não como inteiro)
+```
+db.number.insertOne({ double:12.2, outro_double: 50, inteiro: NumberInt("5") })
+```
+
+## Seção 8 - Operadores de query(avançando em Select)
+### Exercicio 12
+
+importar o novo banco para a sessão:
+```
+mongoimport restaurant.json -d restaurantsData -c restaurants
+```
