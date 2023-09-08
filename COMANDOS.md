@@ -286,4 +286,445 @@ db.number.insertOne({ double:12.2, outro_double: 50, inteiro: NumberInt("5") })
 importar o novo banco para a sessão:
 ```
 mongoimport restaurant.json -d restaurantsData -c restaurants
+db.restaurants.find().count()
 ```
+
+verificar se um registro é igual ao que estamos especificando no document.
+```
+db.restaurants.findOne({ rating: {$eq: 5} })
+```
+
+operadores de maior e maior ou igual $gt e $gte
+```
+db.restaurants.findOne({ rating: {$gte: 4} })
+```
+
+### Exercicio 13
+
+selecionar restaurantes que tem nota maior ou igual a 3, e também que o tipo de comida é Breakfast.
+```
+db.restaurants.find({ type_of_food: "Breakfast", rating: {$gte: 3} }).pretty()
+```
+
+verificar se um dado é menor e menor ou igual a algum valor especifico $lt e $lte
+```
+db.restaurants.findOne({ rating: {$lt: 2} })
+```
+
+- continuação da sessão
+
+operador $in verifica registros ue se encaixam em apenas um dos passados como na lista.
+exemplo procurar restaurantes que servem pizza ou comida chinesa
+```
+db.restaurants.findOne({ type_of_food: {$in: ["Pizza", "Chinese"]} })
+```
+
+operador $ne (not equal) trás resultado que não são iguais ao informado, é o inverso do $eq
+```
+db.restaurants.findOne({ rating: {$ne: 5} })
+```
+
+operador $exists, apenas dados que tem um determinado campo
+```
+db.restaurants.findOne({ high_score: {$exists: true} })
+```
+
+operador $text faz busca sobre o texto do campo que foi informado no filtro. (ainda vamos ver index)
+```
+db.restaurants.createIndex({ name: "text" })
+db.restaurants.find({ $text: { $search: "pizza"} }).pretty()
+```
+
+## Seção 9 - Relacionamentos (Modelagem de Dados)
+
+Embedded Documents é uma forma simples de fazer relacionamento.
+Funciona bem para One to One e One to Many, porém não para Many to Many.
+
+prática:
+
+```
+use relationship
+```
+
+### embedded
+
+```
+db.embedded.insertOne({nome: "Fabiana", idade: 35, endereco: {rua: "Rua das flores", numero: "1314", complemento: "Casa" }})
+```
+
+```
+db.embedded.findOne()
+```
+
+```
+const fabiana = db.embedded.findOne()
+```
+
+```
+fabiana.endereco
+```
+
+```
+fabiana.endereco.rua
+```
+
+```
+db.embedded.insertOne({
+nome: "João 5",
+idade: 40,
+enderecos: {
+  casa: {
+    rua: "Rua das Cores",
+	numero: "1224", complemento:
+	"Apt 101"
+  },
+  trabalho: {
+    rua: "rua dos trabalho",
+	numero: "102 C",
+	complemento: "Galpão"
+  }
+}
+})
+```
+
+```
+const joao5 = db.embedded.findOne({ nome: "João 5"})
+```
+
+```
+joao5.enderecos
+```
+
+```
+joao5.enderecos.trabalho
+```
+
+
+### One to One
+
+```
+db.pessoas.insertOne({
+  nome: "Fabiana",
+  idade: 25,
+  profissao: "Desenvolvedora"
+})
+```
+
+```
+const fabianapessoa = db.pessoas.findOne()
+```
+
+```
+fabianapessoa.nome
+```
+
+```
+fabianapessoa._id
+```
+
+```
+db.enderecos.insertOne({
+  rua: "Rua das flores",
+  numero: "1112",
+  complemento: "Casa",
+  pessoa_id: fabianapessoa._id
+})
+```
+
+```
+db.pessoas.find()
+```
+
+```
+db.enderecos.find().pretty()
+```
+
+```
+db.enderecos.find({pessoa_id: fabianapessoa._id })
+```
+
+```
+const fabiana = db.pessoas.findOne({ nome: "Fabiana" });
+```
+
+```
+fabianaId = fabiana._id;
+```
+
+
+### One to Many
+
+```
+db.pessoas.insertOne({
+  nome: "Gustavo",
+  idade: 29,
+  profissao: "Gerente"
+})
+```
+
+```
+const gustavo = db.pessoas.findOne({ nome: "Gustavo" });
+```
+
+```
+gustavo = gustavo._id
+```
+
+```
+db.compras.insertMany([
+  { produtos: ["Livro", "Celular"], pessoa_id: fabianaId },
+  { produtos: ["Mouse", "Teclado"], pessoa_id: fabianaId },
+  { produtos: ["Agenda"], pessoa_id: gustavoId },
+  { produtos: ["Barbeador", "Suporte de Monitor"], pessoa_id: gustavoId }
+])
+```
+
+```
+db.compras.find()
+```
+
+```
+db.compras.find({ pessoa_id: fabianaId })
+```
+
+```
+db.compras.find({ pessoa_id: gustavoId })
+```
+
+```
+db.compras.find({ pessoa_id: gustavoId }).count()
+```
+
+
+### Many to Many
+
+```
+db.cursos.insertMany([
+  { nome: 'PHP avançado' },
+  { nome: 'JavaScript Básico' },
+  {nome: "Banco de dados NoSQL"}
+])
+```
+
+```
+db.cursos.find();
+```
+
+```
+const php = db.cursos.findOne({ nome: 'PHP avançado' })
+```
+
+```
+const js = db.cursos.findOne({ nome: 'JavaScript Básico' })
+```
+
+// via de regra: nome no singular e por ordem alfabética.
+```
+db.curso_pessoa.insertMany([
+  { curso_id: php._id, pessoa_id: fabiana._id },
+  { curso_id: js._id, pessoa_id: fabiana._id },
+  { curso_id: js._id, pessoa_id: gustavo._id }
+])
+```
+
+```
+db.curso_pessoa.find()
+```
+
+// todos os alunos que cursam js
+
+```
+const idsAlunos = [];
+```
+
+```
+db.curso_pessoa.find({ curso_id: js._id}).forEach(function(aluno) {
+  idsAlunos.push(aluno.pessoa_id);
+})
+```
+
+```
+idsAlunos
+```
+
+// usar o operado $in para fazer a seleção
+
+```
+db.pessoas.find({ _id: { $in: idsAlunos } })
+```
+
+```
+const idsAlunos2 = [];
+```
+
+```
+db.curso_pessoa.find({ curso_id: php._id }).forEach(function (aluno) {
+  idsAlunos2.push(aluno.pessoa_id);
+});
+```
+
+```
+idsAlunos2;
+```
+
+// usar o operado $in para fazer a seleção
+```
+db.pessoas.find({ _id: { $in: idsAlunos2 } });
+```
+
+porque não fazer tudo com embedded documents? porque tem um limite de 16mb por document; então é necessário/preferivel criar novas collections.
+
+## Seção 10 - Seleção de arrays e documents (Avançado em Select)
+
+os comandos estão entro da pasta 10_selecao_arrays_documents
+
+## Seção 11 - Operadores de Update
+
+### operador $inc
+
+pode acrescentar ou diminuir uma quantidade especifica a um valor.
+
+```
+db.blog.updateOne({author: "Fabiana Tavares"}, {$inc: {postCount: 2} });
+```
+
+```
+db.blog.find().pretty()
+```
+
+```
+db.blog.updateOne({author: "Fabiana Tavares"}, {$inc: {postCount: -5}});
+```
+
+```
+db.blog.find().pretty()
+```
+
+### operador $min
+
+pode atualizar um valor caso o valor do operador seja menor que o do registro
+
+```
+db.blog.insertOne({ author: "Maicon Santos", postCount: 50, likesReceived: 50 })
+```
+
+```
+db.blog.find().pretty()
+```
+
+```
+db.blog.updateOne({ author: "Maicon Santos"}, {$min: { postCount: 0, likesReceived: 0}})
+```
+
+```
+db.blog.find().pretty()
+```
+
+### operador $max
+
+faz o inverso de $min, ou seja, atualiza o valor se ele for maior que o do campo.
+
+```
+db.blog.updateOne({ author: "Fabiana Tavares" }, {$max: {maxPosts: 250}})
+```
+
+```
+db.blog.find().pretty()
+```
+
+### operador $mul
+
+multiplica o número de alguma propriedade por outro número definido.
+
+```
+db.blog.updateOne({ author: "Fabiana Tavares" }, {$mul: {maxPosts: 2}})
+```
+
+```
+db.blog.find().pretty()
+```
+
+### operador $rename
+
+renomeia um campo, por outro nome que definimos
+
+```
+db.blog.updateMany({}, {$rename: {author: "author_fullname"}})
+```
+
+```
+db.blog.find().pretty()
+```
+
+### operador $unset
+
+tem como objetivo remover um campo de um item.
+
+```
+db.blog.updateMany({}, {$unset: {active: ""}})
+```
+
+```
+db.blog.find().pretty()
+```
+
+### operador $addToSet
+
+adiciona um ou mais valores em arrays apenas se ele já não estiverem lá.
+
+```
+db.blog.updateOne({author_fullname: "Fabiana Tavares"}, {$addToSet: {categories: { $each: ["PHP", "Vue"]}}})
+```
+
+```
+db.blog.find().pretty()
+```
+
+### operador $pop
+
+remove o ultimo ou o primeiro elemento de um array: Se for -1 remove o primeiro, e se for 1 remove o ultimo elemento.
+
+```
+db.blog.updateOne({author_fullname: "Fabiana Tavares"}, {$pop: {categories: -1}})
+```
+
+```
+db.blog.find().pretty()
+```
+
+### operador $push
+
+adiciona um ou mais valores a um array;
+
+```
+db.blog.updateOne({author_fullname: "Fabiana Tavares"}, {$push: {categories: "Linux"}})
+```
+
+```
+db.blog.find().pretty()
+```
+
+### operador push para vários itens $each
+
+adiciona mais de um valor no array de uma unica vez
+
+```
+db.blog.updateOne({author_fullname: "Fabiana Tavares"}, {$push: {categories: { $each: ["HTML", "CSS"]}}})
+```
+
+```
+db.blog.find().pretty()
+```
+
+### operador $pullAll
+
+Para remover vários itens de um array
+
+```
+db.blog.updateOne({author_fullname: "Maria Marin"}, {$pullAll: { categories: ["Linux", "Docker"]}})
+```
+
+```
+db.blog.find().pretty()
+```
+
