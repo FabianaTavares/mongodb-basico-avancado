@@ -728,3 +728,80 @@ db.blog.updateOne({author_fullname: "Maria Marin"}, {$pullAll: { categories: ["L
 db.blog.find().pretty()
 ```
 
+## Seção 12 - Utilizando Indexes
+
+Índices são recursos que podem aumentar a eficiência de uma query deixando-a mais rápida.
+podemos adicionar indices a um dado em uma colection, e o _id já vem com um índice, os dados com indices são checados primeiro na hosta de uma seleção.
+
+comandos executados está presente dentro da pasta 12_index
+
+> use inspectionsData
+> show collections
+> db.inspections.find().pretty()
+
+## Seção 13 - Utilizando aggregation framework
+
+Objetivo é agregar resultados. Para retornar resultados que não temos somente a apartir dos dados.
+Permitindo criar relatóriios mais completos dos dados do sistema;
+
+Pipeline é o modo como construimos o resultado da nossa agreggation;
+Unir diversos métodos gera uma pipeline;
+Podemos entender pipeline como segmentação.
+
+### $bucket
+
+Tem como objetivo agregar resultados.
+Definiremos como um grupo deve ser classificado, baseado em um campo.
+E recebemos uma contagem de dados neste grupo.
+
+### $bucketAuto
+
+define os buckets da forma mais automatizada. é uma especie de $bucket rapido.
+Definimos um campo e quantos bluckets queremos receber.
+
+### $collStats
+
+retrorna dados de uma coollection; Informações como banco, collection, horario atual, contagem de registros.
+Dados avançados como shards, quantidade de queries executadas e mais.
+
+### $sort
+
+Ordenadar valores de alguma coluna da tabela.
+
+### $limit
+
+Limitar o numero de resultados retornados (paginação por exemplo).
+
+### $match
+
+Determinar filtro com mais exatidão, ou seja, além dos operadores de agrupamento, só retornando livros de um único autor.
+
+### $out
+
+criar uma collection apartir dos resultados de uma aggregation;
+
+### $project
+
+Opção para resgatar apenas os cmapos que precisamos com aggregation
+
+### $sample
+
+Retorna uma amostragem aleatoria, definida por uma quantidade no operador.
+
+### $skip
+
+pular um determinado número de dados.
+
+### $unwind
+
+Desconstrói um array. Permite trabalhar com o resultado de cada item do array descontruidos, ou seja, cada item do array se torna um item no retorno da query.
+
+### $sortByCount
+
+ordena os resultados por um campo especifico, podemos selecionar pelo número de ocorrências de cada grupo.
+
+### $unset
+
+### $unwind
+
+### $count
