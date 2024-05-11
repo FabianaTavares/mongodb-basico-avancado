@@ -8,18 +8,35 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = 8000;
 
+//DB
+const db = require('./db/connection');
+
 // Template engine
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: true }));
+
+const notesRoutes = require('./routes/notes');
 
 // Rotas
-app.get('/', function(req, res) {
-  //res.send('O aplicativo está funcionando');
-  res.render('home');
+app.get('/', async function(req, res) {
+
+    const notes = await db.getDb().db().collection('notes').find({}).toArray();
+
+    res.render('home', { notes });
+
 })
 
-app.listen(port, () => {
-  console.log(`Projeto rodando na porta: ${port}`);
+app.use('/notes', notesRoutes);
 
+db.initDb((err, db) => {
+  if(err) {
+    console.log(err);
+  } else {
+    console.log('o banco conectou com sucesso!')
+    app.listen(port, () => {
+      console.log(`Projeto rodando na porta: ${port}`);
+    });
+  }
 })
