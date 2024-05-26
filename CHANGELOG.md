@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.0.0](https://github.com/FabianaTavares/mongodb-basico-avancado/compare/v5.0.0...v6.0.0) (2024-05-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* Modulos 15 mongoose completo e parte do modulo 16 projeto partytime
+
+### Funcionalidades
+
+* modulos 15 mongoose completo e parte do modulo 16 projeto partytime ([09e6e85](https://github.com/FabianaTavares/mongodb-basico-avancado/commit/09e6e85033187dd35dc2413211df36b39b0bd664))
+
 ## [5.0.0](https://github.com/FabianaTavares/mongodb-basico-avancado/compare/v4.0.0...v5.0.0) (2024-05-11)
 
 
