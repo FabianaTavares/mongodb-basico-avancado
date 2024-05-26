@@ -1,0 +1,16 @@
+{
+  "name": "15_mongoose",
+  "version": "1.0.0",
+  "description": "Utilizando o mongoose",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./index.js localhost 8000"
+  },
+  "author": "Fabiana Tavares <fabi.tavares1@gmail.com> (http://www.frtavares.com.br/)",
+  "license": "MIT",
+  "dependencies": {
+    "mongoose": "^8.3.4",
+    "nodemon": "^3.1.0"
+  }
+}

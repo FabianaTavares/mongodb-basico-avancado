@@ -1,0 +1,1 @@
+Devido a epoca que o curso foi criado, e a versão atual que instalei do mongoose, o código de insert, find etc ficaram bastante diferentes pois impacta nas funções de callback;
