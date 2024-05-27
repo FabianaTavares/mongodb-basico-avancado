@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.1.0](https://github.com/FabianaTavares/mongodb-basico-avancado/compare/v6.0.0...v6.1.0) (2024-05-27)
+
+
+### Funcionalidades
+
+* conclusao da implementacao do backend ([d8bb00f](https://github.com/FabianaTavares/mongodb-basico-avancado/commit/d8bb00fe654cf73ca39bba2fb2618512a707e77d))
+
 ## [6.0.0](https://github.com/FabianaTavares/mongodb-basico-avancado/compare/v5.0.0...v6.0.0) (2024-05-26)
 
 
