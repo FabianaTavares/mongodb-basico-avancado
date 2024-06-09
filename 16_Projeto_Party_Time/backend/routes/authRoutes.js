@@ -35,7 +35,8 @@ router.post("/register", async (req, res) => {
   const user = new User({
     name: name,
     email: email,
-    password: passwordHash
+    password: passwordHash,
+    confirmpassword: confirmpassword,
   });
 
   try {
