@@ -172,7 +172,7 @@ router.delete('/', verifyToken, async (req, res) => {
 });
 
 // update a party
-router.put("/", verifyToken, upload.fields([{name: "photos"}]), async (req, res) => {
+router.patch("/", verifyToken, upload.fields([{ name: "photos" }]), async (req, res) => {
   const title = req.body.title;
   const description = req.body.description;
   const partyDate = req.body.party_date;
@@ -194,9 +194,8 @@ router.put("/", verifyToken, upload.fields([{name: "photos"}]), async (req, res)
   const userByToken = await getUserByToken(token);
   const userId = userByToken._id.toString();
 
-  // check if user id is equal to party user id
-  if (userId != partyUserId) {
-    return res.status(400).json({ error: "Acesso negado"});
+  if (!userId) {
+    return res.status(400).json({ error: 'O usuário não existe!' });
   }
 
   //build party object
@@ -205,18 +204,18 @@ router.put("/", verifyToken, upload.fields([{name: "photos"}]), async (req, res)
     description: description,
     partyDate: partyDate,
     privacy: req.body.privacy,
-    userId: userId,
+    userId: partyUserId,
   };
 
   let photos = [];
 
   if (files && files.length > 0) {
-    files.forEach((photos, i) => {
-      photos[i] = photos.path;
+    files.forEach((photo, i) => {
+      photos[i] = photo.path;
     });
-  }
 
-  partyData.photos = photos;
+   partyData.photos = photos;
+  }
 
   try {
 

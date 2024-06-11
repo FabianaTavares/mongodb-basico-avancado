@@ -20,7 +20,7 @@ export default {
   },
   created() {
     // load user
-    this.getParty();
+    this.getParty()
   },
   methods: {
     async getParty() {
@@ -41,9 +41,7 @@ export default {
           this.party.partyDate = this.party.partyDate.substring(0,10);
 
           this.party.photos.forEach((photo, index) => {
-            console.log(photo, index);
             this.party.photos[index] = photo.replace("public", "http://localhost:3000");
-            console.log(this.party.photos[index])
           })
 
           this.componentKey += 1;

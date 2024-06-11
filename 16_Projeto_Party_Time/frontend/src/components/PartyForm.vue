@@ -1,7 +1,7 @@
 <template>
   <div>
     <Message :msg="msg" :msgClass="msgClass" />
-    <form id="register-form" enctype="multipart/form-data"
+    <form id="party-form" enctype="multipart/form-data"
       @submit="page === 'newparty' ? createParty($event) : update($event)">
       <input type="hidden" id="id" name="id" v-model="id">
       <input type="hidden" id="user_id" name="user_id" v-model="user_id">
@@ -22,7 +22,7 @@
         <label for="photos">Imagens:</label>
         <input type="file" multiple="multiple" id="photos" name="photos" ref="file" @change="onChange">
       </div>
-      <div v-if="page === 'editparty' && showMiniImages" class="mini-imagens">
+      <div v-if="page === 'editparty' && showMiniImages" class="mini-images">
         <p>Imagens atuais:</p>
         <img v-for="(photo, index) in photos" :src="`${photo}`" :key="index" alt="teste">
       </div>
@@ -131,7 +131,7 @@ export default {
       formData.append('id', this.id);
       formData.append('title', this.title);
       formData.append('description', this.description);
-      formData.append('partyDate', this.party_date);
+      formData.append('party_date', this.party_date);
       formData.append('privacy', this.privacy);
       formData.append('user_id', this.user_id);
 
@@ -145,7 +145,7 @@ export default {
       const token = this.$store.getters.token;
 
       await fetch("http://localhost:3000/api/party", {
-        method: "PUT",
+        method: "PATCH",
         headers: {
           "auth-token": token
         },

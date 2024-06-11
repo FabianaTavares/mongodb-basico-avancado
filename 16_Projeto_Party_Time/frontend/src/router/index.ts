@@ -71,6 +71,11 @@ const router = createRouter({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: '/party/:id',
+      name: 'Party',
+      component: () => import(/* webpackChuckName: "party" */ '../views/PartyView.vue')
     }
   ]
 })
