@@ -1,6 +1,6 @@
 {
 	"name": "mongodb-do-basico-ao-avancado",
-	"version": "6.3.0",
+	"version": "7.0.0",
 	"description": "Estudo de MongoDB do básico ao Avançado",
 	"scripts": {
 		"release": "standard-version"

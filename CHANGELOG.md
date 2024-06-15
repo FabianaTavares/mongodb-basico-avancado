@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [7.0.0](https://github.com/FabianaTavares/mongodb-basico-avancado/compare/v6.3.0...v7.0.0) (2024-06-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* mongodb atlas em projeto e finalizacao
+
+### Funcionalidades
+
+* sessão 17 - mongo db atlas e finalização ([2bd918b](https://github.com/FabianaTavares/mongodb-basico-avancado/commit/2bd918b0a8e5967b7f08d16e3294850c9e8944f7))
+
 ## [6.3.0](https://github.com/FabianaTavares/mongodb-basico-avancado/compare/v6.2.0...v6.3.0) (2024-06-11)
 
 
